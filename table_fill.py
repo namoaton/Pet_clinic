@@ -8,6 +8,7 @@ import Pmw
 
 
 class Petclinic (Frame):
+    counter = 0
     def __init__(self):
         Frame.__init__(self)
         Pmw.initialise()
@@ -19,8 +20,8 @@ class Petclinic (Frame):
         self.buttons.grid(columnspan = 2)
         self.buttons.add(u"Прием пациента", command = self.visit, font = "Ubuntu 15")
         self.buttons.add(u"Очистить", command = self.clearContents , font = "Ubuntu 15")
-        self.buttons.add(u"Поиск карточки", command = self.findCard)
-        #self.buttons.add(u"Заполнение карточки", command = self.editCard)
+        self.buttons.add(u"Поиск карточки", command = self.findCard, font = "Ubuntu 15")
+        self.buttons.add(u"Заполнение карточки", command = self.editCard, font = "Ubuntu 15")
         #self.buttons.add(u"История посещений", command = self.history)
         
         #list of visit entry
@@ -77,9 +78,17 @@ class Petclinic (Frame):
         self.IDEntry.set(u'')
     
     def findCard(self):
-    #function that find pet`s card and s how information about
-    
-    
+        self.counter += 1
+        t = Toplevel(self)
+        t.wm_title("Window #%s" % self.counter)
+        l = Label(t, text="This is window #%s" % self.counter, font = "Ubuntu 15")
+        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+    def editCard(self):
+        self.counter += 1
+        t = Toplevel(self)
+        t.wm_title("Window #%s" % self.counter)
+        l = Label(t, text="This is window #%s" % self.counter, font = "Ubuntu 15")
+        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
 def main():
     Petclinic().mainloop()
 if __name__ == "__main__":

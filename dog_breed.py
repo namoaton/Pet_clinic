@@ -22,7 +22,7 @@ for key in breed_list:
     print " (%s, %s);"%(key,breed_list[key])
 
 def add_breed(breed_list):
-    con = MySQLdb.connect(host = '192.168.1.100', user = 'admin', passwd = 'root', db ="petscl", use_unicode=True);
+    con = MySQLdb.connect(host = 'xxx', user = 'user', passwd = 'pass', db ="petscl", use_unicode=True);
     #con.names="utf8"
     con.set_character_set('utf8')
     cur = con.cursor()

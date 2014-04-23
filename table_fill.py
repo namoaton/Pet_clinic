@@ -130,12 +130,28 @@ class Petclinic (Frame):
 			
 			list_db.insert(q, unicode(i[2]))
         list_db.pack(expand=1,fill=BOTH)
+        
+        
     def editCard(self):
-        self.counter += 1
-        t = Toplevel(self)
-        t.wm_title("Window #%s" % self.counter)
-        l = Label(t, text="This is window #%s" % self.counter, font = "Ubuntu 15")
-        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+        search_entry={}
+        tt = Toplevel(self, bd=10)
+        tt.wm_title(u'Владелец')
+        
+		#create entries for searchimg
+        search_list = [u'Имя',u'Фамилия',u'Адрес',u'Email',u'Телефон',u'Доп телефон']
+        for i in range(len(search_list)): 
+            label = Label(tt, text = search_list[i], font = "Ubuntu 10")
+            label.grid (row =i+1, column = 0)
+            entry = Entry(tt, name = search_list[i].lower(), font = "Ubuntu 20")
+            entry.grid(row = i+1, column = 1, sticky = W+E+N+S, padx =5)
+            key = search_list[i]
+            search_entry [key] = entry
+            print search_entry
+        tt.buttons = Pmw.ButtonBox( tt, padx = 0)
+        tt.buttons.grid(columnspan = 2)
+        tt.buttons.add(u"Очистить", command = self.clearContents() , font = "Ubuntu 15")
+        tt.buttons.add(u"Записать", command = self.findCard, font = "Ubuntu 15")
+        tt.buttons.add(u"Закрыть", command = tt.destroy, font = "Ubuntu 15")
         
         
      

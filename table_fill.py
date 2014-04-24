@@ -77,6 +77,9 @@ class Petclinic (Frame):
         for entry in self.entries.values():
             entry.delete(0,END)
         self.IDEntry.set(u'')
+        for entry in self.entrie_owner.values():
+            entry.delete(0,END)
+        self.IDEntry.set(u'')
 
     def findCard(self):
         search_entry={}
@@ -139,7 +142,7 @@ class Petclinic (Frame):
         tt.wm_title(u'Владелец')
         
 		#create entries for searchimg
-        search_list = [u'Имя',u'Фамилия',u'Адрес',u'Email',u'Телефон',u'Доп телефон']
+        search_list = [u'Имя',u'Фамилия',u'Адрес',u'Email',u'Телефон',u'Доп_телефон']
         for i in range(len(search_list)): 
             label = Label(tt, text = search_list[i], font = "Ubuntu 10")
             label.grid (row =i+1, column = 0)
@@ -158,14 +161,14 @@ class Petclinic (Frame):
         tt.buttons.add(u"Закрыть", command = tt.destroy, font = "Ubuntu 15")
         
     def insert_owner(self):
-        if self.entrie_owner [u'Имя'].get()!="" and self.entries [u'Фамилия'].get()!="" and self.entries [u'Адрес'].get()!="" and self.entries [u'Телефон'].get()!="":
-            query = "INSERT INTO visit (pet_id, owner_id, diagnose, manipulation, administration) VALUES(" +str(self.entries[u'Id'].get(),self.entries[u'Хозяин'].get(),self.entries[u'Жалобы'].get(),self.entries[u'Манипуляции'].get(),self.entries[u'Назначения'].get())
-            query  = query[:-2]+")"
+        if self.entrie_owner [u'Имя'].get()!="" and self.entrie_owner [u'Фамилия'].get()!="" and self.entrie_owner [u'Адрес'].get()!="" and self.entrie_owner [u'Телефон'].get()!="":
+            query_owner = "INSERT INTO owner (name, surname, adress, email, phone, home_phone) VALUES('" +str(self.entrie_owner[u'Имя'].get()).decode('utf_8')+"','"+str(self.entrie_owner[u'Фамилия'].get()).decode('utf_8')+"','"+str(self.entrie_owner[u'Адрес'].get()).decode('utf_8')+"','"+str(self.entrie_owner[u'Email'].get()).decode('utf_8')+"','"+str(self.entrie_owner[u'Телефон'].get()).decode('utf_8')+"','"+str(self.entrie_owner[u'Доп_телефон'].get()).decode('utf_8')
+            query_owner  = query_owner[:-2]+"')"
             try :
-                print query
+                print query_owner
                 con = MySQLdb.connect(host = 'xxx.xxx.xxx.xxx', user = 'user', passwd = 'pass', db= "petscl");
                 cursor =con.cursor()
-                cursor.execute(query_list)
+                cursor.execute(query_owner)
             except MySQLdb.OperationalError, mesage:
                 errorMessage = "Error %d:\n%s" %(message[0],mesage[1])
                 showerror ("Error", errorMessage)

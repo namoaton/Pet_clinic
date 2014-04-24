@@ -29,6 +29,7 @@ class Petclinic (Frame):
         fields = [u'Id', u'\u041a\u043b\u0438\u0447\u043a\u0430', u'\u0425\u043e\u0437\u044f\u0438\u043d', u'\u0416\u0430\u043b\u043e\u0431\u044b', u'\u041c\u0430\u043d\u0438\u043f\u0443\u043b\u044f\u0446\u0438\u0438', u'\u041d\u0430\u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f']
 
         self.entries = {}
+        self.entrie_owner={}
         self.IDEntry = StringVar()
         self.IDEntry.set("")
 
@@ -147,12 +148,33 @@ class Petclinic (Frame):
             key = search_list[i]
             search_entry [key] = entry
             print search_entry
+            key = search_list[i].replace(" ","_")
+            #key = key.upper()
+            self.entrie_owner [key] = entry
         tt.buttons = Pmw.ButtonBox( tt, padx = 0)
         tt.buttons.grid(columnspan = 2)
-        tt.buttons.add(u"Очистить", command = self.clearContents() , font = "Ubuntu 15")
-        tt.buttons.add(u"Записать", command = self.findCard, font = "Ubuntu 15")
+        tt.buttons.add(u"Очистить", command = self.clearContents , font = "Ubuntu 15")
+        tt.buttons.add(u"Записать", command = self.insert_owner, font = "Ubuntu 15")
         tt.buttons.add(u"Закрыть", command = tt.destroy, font = "Ubuntu 15")
         
+    def insert_owner(self):
+        if self.entrie_owner [u'Имя'].get()!="" and self.entries [u'Фамилия'].get()!="" and self.entries [u'Адрес'].get()!="" and self.entries [u'Телефон'].get()!="":
+            query = "INSERT INTO visit (pet_id, owner_id, diagnose, manipulation, administration) VALUES(" +str(self.entries[u'Id'].get(),self.entries[u'Хозяин'].get(),self.entries[u'Жалобы'].get(),self.entries[u'Манипуляции'].get(),self.entries[u'Назначения'].get())
+            query  = query[:-2]+")"
+            try :
+                print query
+                con = MySQLdb.connect(host = 'xxx.xxx.xxx.xxx', user = 'user', passwd = 'pass', db= "petscl");
+                cursor =con.cursor()
+                cursor.execute(query_list)
+            except MySQLdb.OperationalError, mesage:
+                errorMessage = "Error %d:\n%s" %(message[0],mesage[1])
+                showerror ("Error", errorMessage)
+            else:
+                cursor.close()
+                con.close()
+                self.clearContents()
+        else:
+            showwarning (u"Заполните поля", u"Заполните все поля")
         
      
 def main():
